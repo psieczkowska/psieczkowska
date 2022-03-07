@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import './changed_body.dart';
-import './test_body.dart';
+import './basic_body.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,31 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Paulina Sieczkowska',
+      home: const MyHomePage(),
       theme: ThemeData(
-        colorSchemeSeed: Colors.lightBlue,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all(Colors.white),
-            backgroundColor:
-                MaterialStateProperty.all(Theme.of(context).primaryColorDark),
-          ),
-        ),
-        fontFamily: 'Quicksand',
-        textTheme: ThemeData.light().textTheme.copyWith(
-                titleSmall: const TextStyle(
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            )),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
+        canvasColor: const Color.fromARGB(255, 249, 241, 255),
       ),
-      home: MyHomePage(),
     );
   }
 }
@@ -53,8 +32,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // The number depends on the user's clicks.
   int _isChanged = 0;
-  List<Color> pinkList = [
+
+  // List of colors in pink shade, which is made for background of content.
+  final List<Color> _pinkList = [
     Colors.pink[50]!,
     Colors.pink[100]!,
     Colors.purple[200]!,
@@ -64,8 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Colors.red[100]!,
     Colors.purple[100]!
   ];
-
-  List<Color> blueList = [
+  // List of colors in pink shade, which is made for background of content.
+  final List<Color> _blueList = [
     Colors.blue[50]!,
     Colors.blue[100]!,
     Colors.blue[200]!,
@@ -76,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Colors.purple[50]!,
   ];
 
-  PreferredSizeWidget _buildCupertinoNavBar() {
+  // The appBar for iOS devices.
+  PreferredSizeWidget _buildCupertinoNavBar(Color color) {
     return CupertinoNavigationBar(
       middle: const Text(
         'Paulina Sieczkowska',
@@ -90,192 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
+      backgroundColor: color,
     );
   }
 
-  // Widget animatedImage(
-  //     int _isChanged, int number, Image firstImage, Image secondImage) {
-  //   return AnimatedCrossFade(
-  //     duration: const Duration(seconds: 1),
-  //     firstChild: firstImage,
-  //     secondChild: secondImage,
-  //     crossFadeState: _isChanged == number
-  //         ? CrossFadeState.showFirst
-  //         : CrossFadeState.showSecond,
-  //   );
-  // }
-
-  // Widget _buildBasicBody(BorderSide borders, double square) {
-  //   return Column(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     children: [
-  //       Row(
-  //         children: [
-  //           Container(
-  //             width: square * 2 / 3,
-  //             height: square / 3,
-  //             decoration: BoxDecoration(
-  //               border: Border(
-  //                 left: borders,
-  //                 top: borders,
-  //                 right: borders,
-  //               ),
-  //             ),
-  //             child: Container(
-  //               padding: EdgeInsets.all(5),
-  //               alignment: Alignment.center,
-  //               child: Text(
-  //                 'Od Bootcampu oczekuję pozytywnej atmosfery, możliwości rozwoju, dużej dawki nowej wiedzy.',
-  //                 textAlign: TextAlign.justify,
-  //                 overflow: TextOverflow.fade,
-  //                 softWrap: true,
-  //                 style: TextStyle(fontSize: 20),
-  //               ),
-  //             ),
-  //           ),
-  //           Container(
-  //             width: square / 3,
-  //             height: square / 3,
-  //             decoration: BoxDecoration(
-  //               border: Border(
-  //                 right: borders,
-  //                 top: borders,
-  //               ),
-  //             ),
-  //             child: const Text('Paulina'),
-  //           ),
-  //         ],
-  //       ),
-  //       Row(
-  //         children: [
-  //           Column(
-  //             children: [
-  //               Container(
-  //                 decoration: BoxDecoration(
-  //                   border: Border(
-  //                     left: borders,
-  //                     bottom: borders,
-  //                     top: borders,
-  //                   ),
-  //                 ),
-  //                 width: square / 3,
-  //                 height: square / 3,
-  //               ),
-  //               Container(
-  //                 decoration: BoxDecoration(
-  //                   border: Border(
-  //                     left: borders,
-  //                     bottom: borders,
-  //                   ),
-  //                 ),
-  //                 width: square / 3,
-  //                 height: square / 3,
-  //               ),
-  //             ],
-  //           ),
-  //           Container(
-  //             decoration: BoxDecoration(
-  //               border: Border.symmetric(
-  //                 vertical: borders,
-  //                 horizontal: borders,
-  //               ),
-  //             ),
-  //             width: square * 2 / 3,
-  //             height: square * 2 / 3,
-  //             child: animatedImage(
-  //               _isChanged,
-  //               0,
-  //               Image.asset(
-  //                 'assets/images/zdjecie1.jpg',
-  //                 fit: BoxFit.fitWidth,
-  //               ),
-  //               Image.asset(
-  //                 'assets/images/zdjecie2.jpg',
-  //                 fit: BoxFit.fitWidth,
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget _buildChangedBody(double square) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Row(
-  //         children: [
-  //           Container(
-  //             width: square * 2 / 3,
-  //             height: square * 2 / 3,
-  //             child: Card(
-  //               child: AnimatedImage(
-  //               _isChanged,
-  //               2,
-  //               Image.asset(
-  //                 'assets/images/zdjecie2.jpg',
-  //                 fit: BoxFit.fitWidth,
-  //               ),
-  //               Image.asset(
-  //                 'assets/images/zdjecie1.jpg',
-  //                 fit: BoxFit.fitWidth,
-  //               ),
-  //             ),
-  //               elevation: 5,
-  //             ),
-  //           ),
-  //           Column(
-  //             children: [
-  //               Container(
-  //                 width: square / 3,
-  //                 height: square / 3,
-  //                 child: Card(
-  //                   elevation: 5,
-  //                 ),
-  //               ),
-  //               Container(
-  //                 width: square / 3,
-  //                 height: square / 3,
-  //                 child: Card(
-  //                   elevation: 5,
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //       Row(
-  //         children: [
-  //           Container(
-  //             width: square / 3,
-  //             height: square / 3,
-  //             child: Card(
-  //               elevation: 5,
-  //             ),
-  //           ),
-  //           Container(
-  //             width: square * 2 / 3,
-  //             height: square / 3,
-  //             child: Card(
-  //               child: const Text('Paulina'),
-  //               elevation: 5,
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  PreferredSizeWidget _buildAppBar() {
+  // The appBar for android devices.
+  PreferredSizeWidget _buildAppBar(Color color) {
     return AppBar(
       title: const Text(
         'Paulina Sieczkowska',
       ),
+      backgroundColor: color,
       actions: [
         IconButton(
           onPressed: _changeUi,
@@ -285,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Changes [_isChanged].
   void _changeUi() {
     setState(() {
       if (_isChanged == 0) {
@@ -302,10 +111,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    // True, if device is in landscape mode.
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
-
-    final PreferredSizeWidget appBar =
-        (!kIsWeb && Platform.isIOS) ? _buildCupertinoNavBar() : _buildAppBar();
+    // The color used for appBar background and borders of table.
+    Color color = Colors.pink;
+    PreferredSizeWidget appBar = (!kIsWeb && Platform.isIOS)
+        ? _buildCupertinoNavBar(color)
+        : _buildAppBar(color);
+    // Number defining the side of the square.
     double squareWidth = mediaQuery.size.width;
     if (isLandscape) {
       squareWidth = mediaQuery.size.height -
@@ -313,38 +126,46 @@ class _MyHomePageState extends State<MyHomePage> {
           mediaQuery.padding.top;
     }
 
-    Widget pageBody = TestBody(
+    Widget pageBody = BasicBody(
       borderColor: Colors.pink,
       bordersSpace: squareWidth / 10,
-      square: squareWidth,
+      square: squareWidth - (squareWidth / 10),
       isChangedNumber: _isChanged,
-      colorsList: pinkList,
+      colorsList: _pinkList,
     );
-    if (_isChanged == 1 ) {
-      pageBody = ChangedBody(
-        square: squareWidth,
-        isChangedNumber: _isChanged,
-        colorsList: pinkList,
-      );
+    //changes the screen content according to the user's presses.
+    switch (_isChanged) {
+      case 1:
+        color = Colors.pink;
+        pageBody = ChangedBody(
+          square: squareWidth,
+          isChangedNumber: _isChanged,
+          colorsList: _pinkList,
+        );
+        break;
+      case 2:
+        color = Colors.indigo;
+        pageBody = ChangedBody(
+          square: squareWidth,
+          isChangedNumber: _isChanged,
+          colorsList: _blueList,
+        );
+        break;
+      case 3:
+        color = Colors.indigo;
+        pageBody = BasicBody(
+          borderColor: Colors.indigo,
+          bordersSpace: squareWidth / 20,
+          square: squareWidth - (squareWidth / 20),
+          isChangedNumber: _isChanged,
+          colorsList: _blueList,
+        );
+        break;
     }
 
-    if (_isChanged == 2) {
-            pageBody = ChangedBody(
-        square: squareWidth,
-        isChangedNumber: _isChanged,
-        colorsList: blueList,
-      );
-    }
-
-    if (_isChanged == 3) {
-      pageBody = TestBody(
-        borderColor: Colors.indigo,
-        bordersSpace: squareWidth / 20,
-        square: squareWidth,
-        isChangedNumber: _isChanged,
-        colorsList: blueList,
-      );
-    }
+    appBar = (!kIsWeb && Platform.isIOS)
+        ? _buildCupertinoNavBar(color)
+        : _buildAppBar(color);
 
     return (!kIsWeb && Platform.isIOS)
         ? GestureDetector(
@@ -359,6 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Scaffold(
               appBar: appBar,
               body: pageBody,
-            ));
+            ),
+          );
   }
 }

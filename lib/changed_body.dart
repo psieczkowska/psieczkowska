@@ -1,22 +1,26 @@
 import 'dart:math';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import './animated_image.dart';
+import './widgets/avatar_stack.dart';
+import './widgets/bootcamp_text.dart';
+import './widgets/facts.dart';
+import './widgets/language_widget.dart';
+import './widgets/animated_image.dart';
 
 class ChangedBody extends StatelessWidget {
   final double square;
   final int isChangedNumber;
   final List<Color> colorsList;
-  const ChangedBody(
-      {Key? key,
-      required this.square,
-      required this.isChangedNumber,
-      required this.colorsList})
-      : super(key: key);
+
+  const ChangedBody({
+    Key? key,
+    required this.square,
+    required this.isChangedNumber,
+    required this.colorsList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double bordersSpace = 0;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,20 +29,17 @@ class ChangedBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               width: square * 2 / 3,
               height: square * 2 / 3,
               child: Card(
-                color: colorsList[Random().nextInt(7)],
+                color: colorsList[Random().nextInt(colorsList.length)],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
                   ),
                   child: AnimatedImage(
                     isChanged: isChangedNumber,
@@ -58,26 +59,34 @@ class ChangedBody extends StatelessWidget {
             ),
             Column(
               children: [
-                Container(
-                  width: square / 3,
-                  height: square / 3,
+                SizedBox(
+                  width: (square - bordersSpace) / 3,
+                  height: (square - bordersSpace) / 3,
                   child: Card(
-                    color: colorsList[Random().nextInt(7)],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    elevation: 0,
+                    color: Colors.transparent,
+                    child: AvatarStack(
+                      colorsList: colorsList,
+                      square: square,
+                      bordersSpace: bordersSpace,
+                      isChangedNumber: isChangedNumber,
                     ),
-                    elevation: 5,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: square / 3,
                   height: square / 3,
                   child: Card(
-                    color: colorsList[Random().nextInt(7)],
+                    color: colorsList[Random().nextInt(colorsList.length)],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     elevation: 5,
+                    child: Facts(
+                      square: square,
+                      bordersSpace: bordersSpace,
+                      isChangedNumber: isChangedNumber,
+                    ),
                   ),
                 ),
               ],
@@ -88,34 +97,27 @@ class ChangedBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               width: square / 3,
               height: square / 3,
               child: Card(
-                color: colorsList[Random().nextInt(7)],
+                color: colorsList[Random().nextInt(colorsList.length)],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 elevation: 5,
+                child: LanguageWidget(isChangedNumber: isChangedNumber),
               ),
             ),
-            Container(
+            SizedBox(
               width: square * 2 / 3,
               height: square / 3,
               child: Card(
-                color: colorsList[Random().nextInt(7)],
+                color: colorsList[Random().nextInt(colorsList.length)],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    'Od Bootcampu oczekuję pozytywnej atmosfery, możliwości rozwoju, dużej dawki nowej wiedzy.',
-                    style: TextStyle(fontSize: 20),
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
+                child: BootcampText(isChangedNumber: isChangedNumber),
                 elevation: 5,
               ),
             ),
